@@ -31,18 +31,20 @@ export interface UserSettings {
   theme: 'light' | 'dark';
   language: 'vi' | 'en';
   notifications: boolean;
-  chatBackground?: string; // New field for chat wallpaper
+  chatBackground?: string;
 }
 
 export interface UserProfile {
   id: string;
   name: string;
-  email?: string; // Added email
+  email?: string;
   age: number;
   gender: UserGender;
   location: string; 
-  coordinates?: { lat: number; lng: number }; // Added real coords
+  coordinates?: { lat: number; lng: number };
   bio: string;
+  job?: string;
+  birthday?: string;
   interests: string[];
   photos: string[];
   isVerified?: boolean; 
@@ -63,6 +65,16 @@ export interface MatchCandidate extends UserProfile {
   distanceKm: number;
 }
 
+export interface DatePlan {
+  name: string;
+  address: string;
+  suggested_time: string;
+  description: string;
+  reason: string;
+  coordinates?: { lat: number, lng: number };
+  whoPays?: { payer: string, reason: string };
+}
+
 export interface ChatMessage {
   id: string;
   senderId: string;
@@ -74,14 +86,17 @@ export interface ChatMessage {
   isAi?: boolean;
 }
 
+export interface Conversation {
+  matchId: string;
+  messages: ChatMessage[];
+  datePlan?: DatePlan;
+  lastMessageTime: number;
+  unreadCount: number;
+}
+
 export interface MatchContext {
   candidate: MatchCandidate;
-  venueSuggestion?: {
-    name: string;
-    address: string;
-    description: string;
-    reason: string; 
-  };
+  venueSuggestion?: DatePlan;
   meetingTime?: string;
   chatHistory: ChatMessage[];
 }
@@ -121,8 +136,17 @@ export interface SocialPost {
   userReaction?: ReactionType; 
 }
 
+export type CategoryId = 'love' | 'sports' | 'tech' | 'lifestyle' | 'arts' | 'food';
+
+export interface CommunityCategory {
+  id: CategoryId;
+  name: string;
+  iconName: string; 
+}
+
 export interface CommunityTopic {
   id: string;
+  categoryId: CategoryId;
   title: string;
   description: string;
   likes: number;
@@ -131,7 +155,13 @@ export interface CommunityTopic {
   isFollowed?: boolean; 
 }
 
-// Dictionary Type
+export interface MatchFilters {
+  ageRange: [number, number];
+  community?: string;
+  maxDistance: number;
+  minTimeFrame: 'asap' | 'tonight' | 'weekend' | 'any';
+}
+
 export type TranslationDictionary = {
   [key: string]: string;
 };
