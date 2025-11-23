@@ -1,0 +1,9 @@
+{
+  "name": "Spark",
+  "description": "Ứng dụng hẹn hò thông minh sử dụng AI để kết nối, gợi ý địa điểm và tạo chủ đề cộng đồng.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}
